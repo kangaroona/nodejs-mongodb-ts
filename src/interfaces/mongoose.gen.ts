@@ -8,6 +8,98 @@
 import mongoose from "mongoose";
 
 /**
+ * Lean version of PersonDocument
+ *
+ * This has all Mongoose getters & functions removed. This type will be returned from `PersonDocument.toObject()`. To avoid conflicts with model names, use the type alias `PersonObject`.
+ * ```
+ * const personObject = person.toObject();
+ * ```
+ */
+export type Person = {
+  age?: number;
+  name?: string;
+  weight?: number;
+  _id: mongoose.Types.ObjectId;
+};
+
+/**
+ * Lean version of PersonDocument (type alias of `Person`)
+ *
+ * Use this type alias to avoid conflicts with model names:
+ * ```
+ * import { Person } from "../models"
+ * import { PersonObject } from "../interfaces/mongoose.gen.ts"
+ *
+ * const personObject: PersonObject = person.toObject();
+ * ```
+ */
+export type PersonObject = Person;
+
+/**
+ * Mongoose Query type
+ *
+ * This type is returned from query functions. For most use cases, you should not need to use this type explicitly.
+ */
+export type PersonQuery = mongoose.Query<any, PersonDocument, PersonQueries> &
+  PersonQueries;
+
+/**
+ * Mongoose Query helper types
+ *
+ * This type represents `PersonSchema.query`. For most use cases, you should not need to use this type explicitly.
+ */
+export type PersonQueries = {};
+
+export type PersonMethods = {};
+
+export type PersonStatics = {};
+
+/**
+ * Mongoose Model type
+ *
+ * Pass this type to the Mongoose Model constructor:
+ * ```
+ * const Person = mongoose.model<PersonDocument, PersonModel>("Person", PersonSchema);
+ * ```
+ */
+export type PersonModel = mongoose.Model<PersonDocument, PersonQueries> &
+  PersonStatics;
+
+/**
+ * Mongoose Schema type
+ *
+ * Assign this type to new Person schema instances:
+ * ```
+ * const PersonSchema: PersonSchema = new mongoose.Schema({ ... })
+ * ```
+ */
+export type PersonSchema = mongoose.Schema<
+  PersonDocument,
+  PersonModel,
+  PersonMethods,
+  PersonQueries
+>;
+
+/**
+ * Mongoose Document type
+ *
+ * Pass this type to the Mongoose Model constructor:
+ * ```
+ * const Person = mongoose.model<PersonDocument, PersonModel>("Person", PersonSchema);
+ * ```
+ */
+export type PersonDocument = mongoose.Document<
+  mongoose.Types.ObjectId,
+  PersonQueries
+> &
+  PersonMethods & {
+    age?: number;
+    name?: string;
+    weight?: number;
+    _id: mongoose.Types.ObjectId;
+  };
+
+/**
  * Lean version of BlogCommentDocument
  *
  * This has all Mongoose getters & functions removed. This type will be returned from `BlogDocument.toObject()`.

@@ -5,11 +5,11 @@ interface DBInterface {
 let dbCache: Record<string, DB> = {};
 
 export const getInstance = (uri: string, dbName: string) => {
-  if (!dbCache[uri]) {
-    dbCache[uri] = new DB(uri, dbName);
-    dbCache[uri].connect();
+  if (!dbCache[dbName]) {
+    dbCache[dbName] = new DB(uri, dbName);
+    dbCache[dbName].connect();
   }
-  return dbCache[uri];
+  return dbCache[dbName];
 };
 export class DB implements DBInterface {
   uri: string;
@@ -27,9 +27,13 @@ export class DB implements DBInterface {
   }
   #init() {
     this.db = mongoose.connection;
-    this.db.on("error", console.error.bind(console, "connection error:"));
-    this.db.once("open", function () {
-      console.log();
+    console.log(this.db);
+    this.db?.on("error", console.error.bind(console, "connection error:"));
+    this.db?.once("open", function () {
+      console.log("succ");
     });
+  }
+  getDB() {
+    return this.db;
   }
 }
