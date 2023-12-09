@@ -10,6 +10,8 @@ async function run() {
     title: "heal the world",
     author: "nanan",
     body: "lalalala",
+    comments: [],
+    meta: {},
   });
   console.log(res);
 }

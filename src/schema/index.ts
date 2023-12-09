@@ -1,5 +1,10 @@
-import { Schema } from "mongoose";
-export const blogSchema = new Schema({
+import { Schema, model } from "mongoose";
+import {
+  BlogSchema,
+  BlogModel,
+  BlogDocument,
+} from "../interfaces/mongoose.gen";
+const blogSchema: BlogSchema = new Schema({
   title: String,
   author: String,
   body: String,
@@ -11,3 +16,7 @@ export const blogSchema = new Schema({
     favs: Number,
   },
 });
+export const Blog: BlogModel = model<BlogDocument, BlogModel>(
+  "Blog",
+  blogSchema
+);
